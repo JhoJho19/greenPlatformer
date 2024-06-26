@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
     [SerializeField] float groundRadious = 2f;
     [SerializeField] Button buttonVirtualLeft;
     [SerializeField] Button buttonVirtualRight;
+    [SerializeField] Button buttonVirtualJump; // Добавьте ссылку на кнопку прыжка
     public Animator animator;
     public bool CanWeGoVertical { get; set; }
     public bool CanWeTakeAnObject { get; set; }
@@ -46,6 +47,7 @@ public class PlayerController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
         AddEventTrigger(buttonVirtualLeft.gameObject, EventTriggerType.PointerUp, (data) => VirtualLeft(false));
         AddEventTrigger(buttonVirtualRight.gameObject, EventTriggerType.PointerDown, (data) => VirtualRight(true));
         AddEventTrigger(buttonVirtualRight.gameObject, EventTriggerType.PointerUp, (data) => VirtualRight(false));
+        AddEventTrigger(buttonVirtualJump.gameObject, EventTriggerType.PointerDown, (data) => VirtualJump()); // Добавьте событие для кнопки прыжка
     }
 
     private void Update()
@@ -72,7 +74,6 @@ public class PlayerController : MonoBehaviour, IPointerDownHandler, IPointerUpHa
             VirtualJump();
         }
 
-        // Update horizontal input from keyboard
         if (Input.GetAxis("Horizontal") != 0)
         {
             horizontalInput = Input.GetAxis("Horizontal");
