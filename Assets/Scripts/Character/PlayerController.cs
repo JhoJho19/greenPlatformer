@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.Burst.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     public float MoveSpeed = 10f;
     [SerializeField] float verticalSpeed = 2.5f;
@@ -14,6 +11,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] float groundRadious = 2f;
+    [SerializeField] Button buttonVirtualLeft;
+    [SerializeField] Button buttonVirtualRight;
     public Animator animator;
     public bool CanWeGoVertical { get; set; }
     public bool CanWeTakeAnObject { get; set; }
@@ -36,13 +35,21 @@ public class PlayerController : MonoBehaviour
 
     private float jumpTime = 0f;
 
+    float horizontalInput;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        // Add event triggers for the virtual buttons
+        AddEventTrigger(buttonVirtualLeft.gameObject, EventTriggerType.PointerDown, (data) => VirtualLeft(true));
+        AddEventTrigger(buttonVirtualLeft.gameObject, EventTriggerType.PointerUp, (data) => VirtualLeft(false));
+        AddEventTrigger(buttonVirtualRight.gameObject, EventTriggerType.PointerDown, (data) => VirtualRight(true));
+        AddEventTrigger(buttonVirtualRight.gameObject, EventTriggerType.PointerUp, (data) => VirtualRight(false));
     }
 
     private void Update()
-    { 
+    {
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundRadious, groundLayer);
 
         if (!isGrounded)
@@ -62,11 +69,17 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            Jump();
+            VirtualJump();
+        }
+
+        // Update horizontal input from keyboard
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
         }
     }
 
-    public void Jump()
+    public void VirtualJump()
     {
         if (isGrounded)
         {
@@ -85,20 +98,6 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (CanWeGoVertical)
-        {
-            rb.gravityScale = 0;
-            float verticalInput = Input.GetAxis("Vertical");
-            Vector2 moveDirectionVertical = new Vector2(0, verticalInput);
-            float moveVertical = moveDirectionVertical.y * verticalSpeed;
-            rb.velocity = new Vector2(rb.velocity.x, moveDirectionVertical.y * verticalSpeed);
-        }
-        else
-        {
-            rb.gravityScale = 5;
-        }
-
-        float horizontalInput = Input.GetAxis("Horizontal");
         Vector2 moveDirection = new Vector2(horizontalInput, 0);
         float move = moveDirection.x * MoveSpeed;
         rb.velocity = new Vector2(moveDirection.x * MoveSpeed, rb.velocity.y);
@@ -106,7 +105,7 @@ public class PlayerController : MonoBehaviour
         {
             animator.SetBool("IsMove", true);
         }
-        else 
+        else
         {
             animator.SetBool("IsMove", false);
         }
@@ -118,6 +117,19 @@ public class PlayerController : MonoBehaviour
         else if (move < 0 && facingRight)
         {
             Flip();
+        }
+
+        if (CanWeGoVertical)
+        {
+            rb.gravityScale = 0;
+            float verticalInput = Input.GetAxis("Vertical");
+            Vector2 moveDirectionVertical = new Vector2(0, verticalInput);
+            float moveVertical = moveDirectionVertical.y * verticalSpeed;
+            rb.velocity = new Vector2(rb.velocity.x, moveDirectionVertical.y * verticalSpeed);
+        }
+        else
+        {
+            rb.gravityScale = 5;
         }
     }
 
@@ -142,5 +154,51 @@ public class PlayerController : MonoBehaviour
         MoveSpeed = startSpeed;
         jumpForce = startJumpForce;
     }
-}
 
+    public void VirtualLeft(bool isPressed)
+    {
+        horizontalInput = isPressed ? -1f : 0f;
+    }
+
+    public void VirtualRight(bool isPressed)
+    {
+        horizontalInput = isPressed ? 1f : 0f;
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if (eventData.pointerPress == buttonVirtualLeft.gameObject)
+        {
+            VirtualLeft(true);
+        }
+        else if (eventData.pointerPress == buttonVirtualRight.gameObject)
+        {
+            VirtualRight(true);
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (eventData.pointerPress == buttonVirtualLeft.gameObject)
+        {
+            VirtualLeft(false);
+        }
+        else if (eventData.pointerPress == buttonVirtualRight.gameObject)
+        {
+            VirtualRight(false);
+        }
+    }
+
+    private void AddEventTrigger(GameObject obj, EventTriggerType type, UnityAction<BaseEventData> action)
+    {
+        EventTrigger trigger = obj.GetComponent<EventTrigger>();
+        if (trigger == null)
+        {
+            trigger = obj.AddComponent<EventTrigger>();
+        }
+
+        var entry = new EventTrigger.Entry { eventID = type };
+        entry.callback.AddListener(action);
+        trigger.triggers.Add(entry);
+    }
+}
