@@ -4,11 +4,19 @@ using UnityEngine;
 
 public class CloverBeh : MonoBehaviour
 {
+    [SerializeField] Animator animator;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
-            Destroy(gameObject);
+            StartCoroutine(AnimationAndDestroy());
         }
+    }
+
+    IEnumerator AnimationAndDestroy()
+    {
+        animator.SetTrigger("Destroy");
+        yield return new WaitForSeconds(.25f);
+        Destroy(gameObject);
     }
 }
