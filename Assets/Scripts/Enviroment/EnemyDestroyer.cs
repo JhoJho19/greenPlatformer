@@ -6,9 +6,9 @@ public class EnemyDestroyer : MonoBehaviour
 {
     [SerializeField] GameObject gameObjectThis;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.tag == "Player")
         {
             StartCoroutine(AnimationAndDestroy());
         }
@@ -17,7 +17,7 @@ public class EnemyDestroyer : MonoBehaviour
     IEnumerator AnimationAndDestroy()
     {
         //animator.SetTrigger("Destroy");
-        yield return new WaitForSeconds(.01f);
+        yield return new WaitForSeconds(.1f);
         Destroy(gameObjectThis);
     }
 }
