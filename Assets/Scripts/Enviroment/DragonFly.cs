@@ -10,4 +10,12 @@ public class DragonFly : MonoBehaviour
     {
         transform.position += Vector3.left * speed * Time.deltaTime;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("EnemyDestroyer"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }
