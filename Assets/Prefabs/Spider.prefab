@@ -104,7 +104,7 @@ Transform:
   - {fileID: 822024071598487162}
   - {fileID: 2069797254431778102}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &7086354994406355705
 SpriteRenderer:
@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
+  colliderForDestroy: {fileID: 0}
   movingRight: 1
 --- !u!95 &664420169835599307
 Animator:
@@ -285,7 +286,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2069797254431778102
 Transform:
   m_ObjectHideFlags: 0

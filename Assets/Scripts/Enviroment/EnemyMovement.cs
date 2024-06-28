@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyMovement : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
-
+    [SerializeField] Collider2D colliderForDestroy;
     public bool movingRight = true;
 
     private void FixedUpdate()
@@ -39,5 +39,14 @@ public class EnemyMovement : MonoBehaviour
         {
             Flip();
         }
+        if (collision.CompareTag("Player"))
+        {
+            //colliderForDestroy.enabled = false;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        //colliderForDestroy.enabled = true;
     }
 }

@@ -10,6 +10,7 @@ public class EnemyDestroyer : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            collision.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 16.5f), ForceMode2D.Impulse);
             StartCoroutine(AnimationAndDestroy());
         }
     }
