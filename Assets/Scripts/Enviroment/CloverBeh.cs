@@ -11,7 +11,7 @@ public class CloverBeh : MonoBehaviour
         if (collision.tag == "Player")
         {
             StartCoroutine(AnimationAndDestroy());
-            if (clovers == null) 
+            if (clovers == null)
             {
                 clovers = FindObjectOfType<Clovers>();
             }
