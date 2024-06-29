@@ -5,11 +5,17 @@ using UnityEngine;
 public class CloverBeh : MonoBehaviour
 {
     [SerializeField] Animator animator;
+    Clovers clovers;
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
             StartCoroutine(AnimationAndDestroy());
+            if (clovers == null) 
+            {
+                clovers = FindObjectOfType<Clovers>();
+            }
+            clovers.CloverIncrease();
         }
     }
 

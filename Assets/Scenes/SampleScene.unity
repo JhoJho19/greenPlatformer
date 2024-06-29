@@ -3417,6 +3417,7 @@ GameObject:
   - component: {fileID: 675959447}
   - component: {fileID: 675959449}
   - component: {fileID: 675959448}
+  - component: {fileID: 675959450}
   m_Layer: 5
   m_Name: ImageClovers
   m_TagString: Untagged
@@ -3485,6 +3486,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 675959446}
   m_CullTransparentMesh: 1
+--- !u!114 &675959450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 675959446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71941f34f7f5f244099ceed2526dcda7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clover1: {fileID: 739749746}
+  clover2: {fileID: 359006170}
+  clover3: {fileID: 773332663}
 --- !u!1 &679432140
 GameObject:
   m_ObjectHideFlags: 0
@@ -5250,8 +5266,9 @@ GameObject:
   - component: {fileID: 1016535510}
   - component: {fileID: 1016535512}
   - component: {fileID: 1016535511}
+  - component: {fileID: 1016535513}
   m_Layer: 5
-  m_Name: ImageOval
+  m_Name: ImageLifes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5320,6 +5337,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1016535509}
   m_CullTransparentMesh: 1
+--- !u!114 &1016535513
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1016535509}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3d81c97bbc8fce4b88af0f590cceccc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifes:
+  - {fileID: 1678454627}
+  - {fileID: 1886770073}
+  - {fileID: 1775306689}
+  - {fileID: 1979916171}
+  - {fileID: 46366675}
 --- !u!1 &1032466394
 GameObject:
   m_ObjectHideFlags: 0
@@ -10047,7 +10082,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2073748217}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: CryslatsObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

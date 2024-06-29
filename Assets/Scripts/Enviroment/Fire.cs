@@ -5,6 +5,7 @@ using UnityEngine;
 public class Fire : MonoBehaviour
 {
     private Coroutine blinkingCoroutine;
+    LifeController lifeController;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -13,6 +14,11 @@ public class Fire : MonoBehaviour
             if (blinkingCoroutine == null)
             {
                 blinkingCoroutine = StartCoroutine(BlinkingCoroutine(collision.GetComponent<CharacterEffects>()));
+                if (lifeController == null)
+                {
+                    lifeController = FindObjectOfType<LifeController>();
+                }
+                lifeController.DecreaseLifes();
             }
         }
     }
@@ -21,11 +27,8 @@ public class Fire : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            if (blinkingCoroutine != null)
-            {
-                StopCoroutine(blinkingCoroutine);
-                blinkingCoroutine = null;
-            }
+            StopCoroutine(blinkingCoroutine);
+            blinkingCoroutine = null;
         }
     }
 
