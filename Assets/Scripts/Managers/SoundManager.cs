@@ -25,5 +25,9 @@ public class SoundManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-
+    public void StartButtonSound()
+    {
+        audioSourceSounds.clip = clickStartButton;
+        audioSourceSounds.Play();
+    }
 }
