@@ -11,7 +11,9 @@ public class EndZone : MonoBehaviour
         {
             Data.SetEnergy(-1);
             if(Data.GetEnergy() > 0)
-            ReloadCurrentScene();
+                ReloadCurrentScene();
+            else
+                FindObjectOfType<GameOverScreen>().ShowGameOverScreen();
         }
     }
     void ReloadCurrentScene()

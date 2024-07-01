@@ -17,5 +17,9 @@ public class Data : MonoBehaviour
     { return Energy; }
 
     public static void SetEnergy(int increament)
-    { Energy += increament; }
+    { 
+        Energy += increament; 
+        if (Energy < 0)
+        { Energy = 0; }
+    }
 }
