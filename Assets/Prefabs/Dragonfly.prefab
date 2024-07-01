@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6148895894073470706}
   - component: {fileID: 4023771452240677186}
-  - component: {fileID: 6983649609363514350}
   - component: {fileID: 1365627624419413754}
   m_Layer: 0
   m_Name: ColliderForDestroy
@@ -18,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6148895894073470706
 Transform:
   m_ObjectHideFlags: 0
@@ -27,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2609550634714018939}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.25, z: 0}
+  m_LocalPosition: {x: 0, y: -0.194, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64,7 +63,7 @@ BoxCollider2D:
     serializedVersion: 2
     m_Bits: 4294967295
   m_IsTrigger: 0
-  m_UsedByEffector: 1
+  m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0.37792063}
   m_SpriteTilingProperty:
@@ -79,25 +78,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 0.10162279}
   m_EdgeRadius: 0
---- !u!251 &6983649609363514350
-PlatformEffector2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2609550634714018939}
-  m_Enabled: 1
-  m_UseColliderMask: 1
-  m_ColliderMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RotationalOffset: 0
-  m_UseOneWay: 1
-  m_UseOneWayGrouping: 0
-  m_SurfaceArc: 125
-  m_UseSideFriction: 0
-  m_UseSideBounce: 0
-  m_SideArc: 1
 --- !u!114 &1365627624419413754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,7 +90,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921d87ccec9b1c149917839f27034aad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameObjectThis: {fileID: 4652755347541505755}
+  objectForDestroy: {fileID: 4652755347541505755}
+  colliderOfObjectForDestroy: {fileID: 2076818404880766888}
+  triggerOfObjectForDestroy: {fileID: 2076818404880766888}
+  detectorCollider: {fileID: 4023771452240677186}
+  isFlying: 1
 --- !u!1 &4652755347541505755
 GameObject:
   m_ObjectHideFlags: 0
@@ -126,6 +110,7 @@ GameObject:
   - component: {fileID: 6067396303418058192}
   - component: {fileID: 2764783989785342098}
   - component: {fileID: 2319300534101272956}
+  - component: {fileID: 3409859790976534289}
   m_Layer: 0
   m_Name: Dragonfly
   m_TagString: Untagged
@@ -309,3 +294,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3409859790976534289
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4652755347541505755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e2208f8000fff4fbd2a2230f9d1619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  colliderForDestroy: {fileID: 4023771452240677186}
+  movingRight: 0

@@ -91,8 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   objectForDestroy: {fileID: 7716635548648228573}
-  colliderOfObjectForDestroy: {fileID: 0}
-  triggerOfObjectForDestroy: {fileID: 5610983624354829724}
+  colliderOfObjectForDestroy: {fileID: 3074324791401499093}
+  triggerOfObjectForDestroy: {fileID: 3074324791401499093}
   detectorCollider: {fileID: 5610983624354829724}
   isFlying: 1
 --- !u!1 &4670167620386597357
@@ -108,6 +108,7 @@ GameObject:
   - component: {fileID: 9029415715053988097}
   - component: {fileID: 6555896427080041009}
   - component: {fileID: 3074324791401499093}
+  - component: {fileID: 5917411539579774380}
   m_Layer: 0
   m_Name: Bee
   m_TagString: Untagged
@@ -261,6 +262,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.85333335, y: 0.85333335}
   m_EdgeRadius: 0
+--- !u!114 &5917411539579774380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4670167620386597357}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66e2208f8000fff4fbd2a2230f9d1619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 0
+  colliderForDestroy: {fileID: 5610983624354829724}
+  movingRight: 0
 --- !u!1 &7716635548648228573
 GameObject:
   m_ObjectHideFlags: 0
