@@ -33,6 +33,10 @@ public class LifeController : MonoBehaviour
                     Scene currentScene = SceneManager.GetActiveScene();
                     SceneManager.LoadScene(currentScene.name);
                 }
+                else 
+                {
+                    GameObject.Find("ImageGameOver").SetActive(true);
+                }
             }
         }
     }
