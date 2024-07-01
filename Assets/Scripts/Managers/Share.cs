@@ -1,8 +1,10 @@
-using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.iOS;
 
-public class ShareButton : MonoBehaviour
+public class Rate : MonoBehaviour
 {
-    
+    public void RateGame()
+    {
+        Device.RequestStoreReview();
+    }
 }

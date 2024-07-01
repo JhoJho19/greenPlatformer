@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.iOS;
 
-public class Rate : MonoBehaviour
+public class RateGame : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void RequestReview()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+#if UNITY_IOS
+        Device.RequestStoreReview();
+#endif
     }
 }
