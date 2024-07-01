@@ -41,12 +41,20 @@ public class EnemyMovement : MonoBehaviour
         }
         if (collision.CompareTag("Player"))
         {
-            //colliderForDestroy.enabled = false;
+            colliderForDestroy.enabled = false;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //colliderForDestroy.enabled = true;
+        if (collision.CompareTag("Player"))
+        {
+            Invoke("ReturnCollider", 0.1f);
+        }
+    }
+
+    private void ReturnCollider()
+    {
+        colliderForDestroy.enabled = true;
     }
 }

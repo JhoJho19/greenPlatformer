@@ -1,24 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EnemyDestroyer : MonoBehaviour
 {
-    [SerializeField] GameObject gameObjectThis;
+    [SerializeField] GameObject objectForDestroy;
+    [SerializeField] Collider2D colliderOfObjectForDestroy;
+    [SerializeField] Collider2D triggerOfObjectForDestroy;
+    [SerializeField] Collider2D detectorCollider;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 16.5f), ForceMode2D.Impulse);
+            detectorCollider.isTrigger = true;
+            triggerOfObjectForDestroy.enabled = false;
+            colliderOfObjectForDestroy.enabled = false;
+            collision.gameObject.GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 16.5f), ForceMode2D.Impulse);
             StartCoroutine(AnimationAndDestroy());
         }
     }
 
     IEnumerator AnimationAndDestroy()
     {
-        //animator.SetTrigger("Destroy");
-        yield return new WaitForSeconds(.1f);
-        Destroy(gameObjectThis);
+        yield return new WaitForSeconds(2f);
+        Destroy(objectForDestroy);
     }
 }
