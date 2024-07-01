@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Data : MonoBehaviour
@@ -21,5 +22,10 @@ public class Data : MonoBehaviour
         Energy += increament; 
         if (Energy < 0)
         { Energy = 0; }
+    }
+
+    public static void Save()
+    {
+        ;
     }
 }

@@ -8,6 +8,8 @@ public class WheelOfFortune : MonoBehaviour
     [SerializeField] GameObject buttonSpin;
     [SerializeField] GameObject winImagee;
     [SerializeField] TextMeshProUGUI textWin;
+    [SerializeField] GameObject winScreen;
+    [SerializeField] TextMeshProUGUI textCollect;
 
     private float[] angles = { 40f, 80f, 120f, 160f, 200f, 240f, 280f, 320f, 360f };
     private bool isSpinning = false;
@@ -75,9 +77,15 @@ public class WheelOfFortune : MonoBehaviour
 
         int crystalsAtFinish = FindObjectOfType<Crystals>().crystals * coefficient;
         Data.SetCrystals(crystalsAtFinish);
-
+        Debug.Log(crystalsAtFinish);
         winImagee.gameObject.SetActive(true);
         textWin.text = $"X{coefficient} YOUR DIAMONDS";
+
+        yield return new WaitForSeconds(0.5f);
+        winScreen.gameObject.SetActive(true);
+        textCollect.text = crystalsAtFinish.ToString();
+
+        Data.Save();
     }
 
     private float EaseOutCubic(float t)
