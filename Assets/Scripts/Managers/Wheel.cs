@@ -1,31 +1,24 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class WheelOfFortune : MonoBehaviour
 {
-    public Transform wheel; // Ссылка на колесо (Transform)
-    public float spinDuration = 4.0f; // Длительность вращения
-    public float slowDownDuration = 2.0f; // Длительность замедления
-    [SerializeField] private Button button;
-    private float[] sectorAngles; // Углы для каждого сектора
+    [SerializeField] float spinDuration = 4f; // Длительность вращения
+    [SerializeField] GameObject buttonSpin;
+    [SerializeField] GameObject winImagee;
+    [SerializeField] TextMeshProUGUI textWin;
+
+    private float[] angles = { 40f, 80f, 120f, 160f, 200f, 240f, 280f, 320f, 360f };
     private bool isSpinning = false;
+    private float targetAngle;
 
-    private void Start()
-    {
-        // Инициализация углов для каждого сектора (360 / 9 = 40 градусов на сектор)
-        sectorAngles = new float[9];
-        for (int i = 0; i < 9; i++)
-        {
-            sectorAngles[i] = i * (360 / 9);
-        }
-    }
 
-    public void StartSpin()
+    public void Spin()
     {
-        button.gameObject.SetActive(false);
         if (!isSpinning)
         {
+            buttonSpin.gameObject.SetActive(false);
             StartCoroutine(SpinWheel());
         }
     }
@@ -34,55 +27,60 @@ public class WheelOfFortune : MonoBehaviour
     {
         isSpinning = true;
 
-        float elapsedTime = 0f;
-        float currentAngle = wheel.eulerAngles.z;
-        float targetAngle = currentAngle + 360 * 5 + Random.Range(0, 360); // 5 полных оборотов плюс случайный угол
+        // Случайный выбор угла
+        int chosenIndex = Random.Range(0, angles.Length);
+        targetAngle = angles[chosenIndex];
 
-        // Вращение колеса
-        while (elapsedTime < spinDuration)
+        float startAngle = transform.eulerAngles.z;
+        float endAngle = startAngle + 360 * 3 + targetAngle; // Вращение на 3 оборота + целевой угол
+
+        float elapsed = 0f;
+
+        while (elapsed < spinDuration)
         {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / spinDuration;
-            float angle = Mathf.Lerp(currentAngle, targetAngle, t);
-            wheel.eulerAngles = new Vector3(0, 0, angle);
+            elapsed += Time.deltaTime;
+            float t = elapsed / spinDuration;
+            float currentAngle = Mathf.Lerp(startAngle, endAngle, EaseOutCubic(t));
+            transform.eulerAngles = new Vector3(0, 0, currentAngle);
             yield return null;
         }
 
-        // Замедление вращения
-        elapsedTime = 0f;
-        currentAngle = wheel.eulerAngles.z;
-        targetAngle = currentAngle + Random.Range(0, 360); // Дополнительный случайный угол для замедления
+        transform.eulerAngles = new Vector3(0, 0, endAngle);
 
-        while (elapsedTime < slowDownDuration)
-        {
-            elapsedTime += Time.deltaTime;
-            float t = elapsedTime / slowDownDuration;
-            float angle = Mathf.Lerp(currentAngle, targetAngle, t);
-            wheel.eulerAngles = new Vector3(0, 0, angle);
-            yield return null;
-        }
-
-        // Остановка на случайном секторе
-        float finalAngle = wheel.eulerAngles.z;
-        int sector = GetSector(finalAngle);
-        Debug.Log("Landed on sector: " + sector);
+        Debug.Log($"Sector: {angles[chosenIndex]}");
 
         isSpinning = false;
+
+        yield return new WaitForSeconds(0.5f);
+
+        int coefficient = 0;
+        if (angles[chosenIndex] == 40)
+            coefficient = 1;
+        else if (angles[chosenIndex] == 80)
+            coefficient = 5;
+        else if (angles[chosenIndex] == 120)
+            coefficient = 3;
+        else if (angles[chosenIndex] == 160)
+            coefficient = 1;
+        else if (angles[chosenIndex] == 200)
+            coefficient = 4;
+        else if (angles[chosenIndex] == 240)
+            coefficient = 1;
+        else if (angles[chosenIndex] == 280)
+            coefficient = 2;
+        else if (angles[chosenIndex] == 320)
+            coefficient = 1;
+        else if (angles[chosenIndex] == 360)
+            coefficient = 2;
+
+
+        winImagee.gameObject.SetActive(true);
+        textWin.text = $"X{coefficient} YOUR DIAMONDS";
     }
 
-    private int GetSector(float angle)
+    private float EaseOutCubic(float t)
     {
-        angle = Mathf.Repeat(angle, 360); // Приведение угла к диапазону [0, 360)
-        float sectorSize = 360 / 9;
-
-        for (int i = 0; i < sectorAngles.Length; i++)
-        {
-            if (angle >= sectorAngles[i] && angle < sectorAngles[i] + sectorSize)
-            {
-                return i + 1; // Возвращает номер сектора (1-9)
-            }
-        }
-
-        return 1; // На случай ошибки возвращаем сектор 1
+        t--;
+        return t * t * t + 1;
     }
 }
