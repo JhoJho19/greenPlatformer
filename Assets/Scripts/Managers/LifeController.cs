@@ -8,14 +8,15 @@ public class LifeController : MonoBehaviour
 {
     [SerializeField] Image[] lifes;
     Color newColor = new Color(0f, 0f, 0f, 0.1f);
+    int lifesCount = 5;
 
     public void DecreaseLifes()
     {
-        if (Data.GetEnergy() > 0)
+        if (lifesCount > 0)
         {
-            Data.SetEnergy(-1);
+            lifesCount--;
 
-            for (int i = 4; i >= Data.GetEnergy(); i--)
+            for (int i = 4; i >= lifesCount; i--)
             {
                 if (i < lifes.Length)
                 {
@@ -23,9 +24,9 @@ public class LifeController : MonoBehaviour
                 }
             }
 
-            if (Data.GetEnergy() == 0)
+            if (lifesCount == 0)
             {
-                FindObjectOfType<GameOverScreen>().ShowGameOverScreen();
+                Data.SetEnergy(-1);
                 if (Data.GetEnergy() > 0)
                 {
                     Scene currentScene = SceneManager.GetActiveScene();
@@ -33,7 +34,7 @@ public class LifeController : MonoBehaviour
                 }
                 else 
                 {
-                    GameObject.Find("ImageGameOver").SetActive(true);
+                    FindObjectOfType<GameOverScreen>().ShowGameOverScreen();
                 }
             }
         }

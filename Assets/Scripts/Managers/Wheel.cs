@@ -73,6 +73,8 @@ public class WheelOfFortune : MonoBehaviour
         else if (angles[chosenIndex] == 360)
             coefficient = 2;
 
+        int crystalsAtFinish = FindObjectOfType<Crystals>().crystals * coefficient;
+        Data.SetCrystals(crystalsAtFinish);
 
         winImagee.gameObject.SetActive(true);
         textWin.text = $"X{coefficient} YOUR DIAMONDS";

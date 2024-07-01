@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class Crystals : MonoBehaviour
 {
-    int crystals;
+    public int crystals { get; private set; }
     [SerializeField] TextMeshProUGUI textCrystals;
 
     void Start()
