@@ -9,6 +9,8 @@ public class EndZone : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
+            Data.SetEnergy(-1);
+            if(Data.GetEnergy() > 0)
             ReloadCurrentScene();
         }
     }

@@ -26,8 +26,13 @@ public class LifeController : MonoBehaviour
 
             if (lifesCount == 0)
             {
-                Scene currentScene = SceneManager.GetActiveScene();
-                SceneManager.LoadScene(currentScene.name);
+                FindObjectOfType<EnergyCounterOutput>().RefreshEnergyCounter();
+                Data.SetEnergy(-1);
+                if (Data.GetEnergy() > 0)
+                {
+                    Scene currentScene = SceneManager.GetActiveScene();
+                    SceneManager.LoadScene(currentScene.name);
+                }
             }
         }
     }
