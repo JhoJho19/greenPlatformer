@@ -27,9 +27,11 @@ public class Fire : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            StopCoroutine(blinkingCoroutine);
             if (blinkingCoroutine != null)
-            blinkingCoroutine = null;
+            {
+                StopCoroutine(blinkingCoroutine);
+                blinkingCoroutine = null;
+            }
         }
     }
 
